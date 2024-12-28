@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deposit, requestLoan, withdraw, payLoan } from "./accountSlice";
 
+// 用户账户操作组件
 function AccountOperations() {
   const [depositAmount, setDepositAmount] = useState("");
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
@@ -7,13 +10,49 @@ function AccountOperations() {
   const [loanPurpose, setLoanPurpose] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  function handleDeposit() {}
+  // const exchangeRates = {
+  //   USD: 1,
+  //   EUR: 0.85,
+  //   GBP: 0.72,
+  //   JPY: 110.91,
+  //   CNY: 7.2,
+  // };
 
-  function handleWithdrawal() {}
+  const dispatch = useDispatch();
+  // 从store中获取用户账户信息 -> account
+  const {
+    loan: currentLoan,
+    loanPurpose: currentLoanPurpose,
+    balance,
+    isLoading,
+  } = useSelector((store) => store.account);
+  console.log(balance);
 
-  function handleRequestLoan() {}
-
-  function handlePayLoan() {}
+  // 处理存款
+  function handleDeposit() {
+    if (!depositAmount || depositAmount <= 0 || !currency) return;
+    // const convertedAmount = depositAmount * exchangeRates[currency];
+    dispatch(deposit(depositAmount, currency)); // dispatch action
+    setDepositAmount(""); // clear input
+    setCurrency("USD"); // clear currency
+  }
+  // 处理取款
+  function handleWithdrawal() {
+    if (!withdrawalAmount) return;
+    dispatch(withdraw(withdrawalAmount));
+    setWithdrawalAmount("");
+  }
+  // 处理贷款请求
+  function handleRequestLoan() {
+    if (!loanAmount || !loanPurpose) return;
+    dispatch(requestLoan(loanAmount, loanPurpose));
+    setLoanAmount("");
+    setLoanPurpose("");
+  }
+  // 处理还贷
+  function handlePayLoan() {
+    dispatch(payLoan());
+  }
 
   return (
     <div>
@@ -33,9 +72,13 @@ function AccountOperations() {
             <option value="USD">US Dollar</option>
             <option value="EUR">Euro</option>
             <option value="GBP">British Pound</option>
+            <option value="JPY">Japanese Yen</option>
+            <option value="CNY">Chinese Yuan</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit {depositAmount}</button>
+          <button onClick={() => handleDeposit()} disabled={isLoading}>
+            {isLoading ? "Converting..." : `Deposit ${depositAmount}`}
+          </button>
         </div>
 
         <div>
@@ -66,10 +109,14 @@ function AccountOperations() {
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>
 
-        <div>
-          <span>Pay back $X</span>
-          <button onClick={handlePayLoan}>Pay loan</button>
-        </div>
+        {currentLoan > 0 && (
+          <div>
+            <span>
+              Pay back ${currentLoan} [{currentLoanPurpose}]
+            </span>
+            <button onClick={handlePayLoan}>Pay loan</button>
+          </div>
+        )}
       </div>
     </div>
   );

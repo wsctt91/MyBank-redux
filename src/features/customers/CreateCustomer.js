@@ -1,10 +1,22 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createCustomer } from "./customerSlice";
 
-function Customer() {
+// 用户信息组件
+function CreateCustomer() {
   const [fullName, setFullName] = useState("");
   const [nationalId, setNationalId] = useState("");
 
-  function handleClick() {}
+  // useDispatch hook to dispatch actions
+  const dispatch = useDispatch();
+
+  // 从store中获取用户信息 -> customer
+  function handleClick() {
+    if (!fullName || !nationalId) return;
+    dispatch(createCustomer(fullName, nationalId));
+    setFullName("");
+    setNationalId("");
+  }
 
   return (
     <div>
@@ -21,7 +33,7 @@ function Customer() {
           <label>National ID</label>
           <input
             value={nationalId}
-            onChange={(e) => setNationalId(e.target.value)}
+            onChange={(e) => setNationalId(e.target.value)} // onChange事件代表输入框内容发生变化时触发
           />
         </div>
         <button onClick={handleClick}>Create new customer</button>
@@ -30,4 +42,4 @@ function Customer() {
   );
 }
 
-export default Customer;
+export default CreateCustomer;

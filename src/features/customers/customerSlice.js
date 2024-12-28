@@ -25,17 +25,18 @@ export default function customerReducer(state = initialStateCustomer, action) {
   }
 }
 
-// Customer actions
+// Customer actions 创建用户
 export function createCustomer(fullName, nationalID) {
   return {
     type: "customer/createCustomer",
-    payload: { fullName, nationalID, creartedAt: new Date().toISOString() },
+    payload: { fullName, nationalID, createdAt: new Date().toISOString() },
   };
 }
-// Update customer name
+
+// Update customer name  更新用户信息
 export function updateName(fullName) {
   return {
-    type: "account/updateName",
+    type: "customer/updateName",
     payload: { fullName },
   };
 }
