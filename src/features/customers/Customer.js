@@ -5,7 +5,7 @@ function Customer() {
   const customer = useSelector((store) => store.customer.fullName);
   // console.log(customer);
 
-  return <h2>👋 Welcome, {customer}</h2>;
+  return <h2>👋 欢迎你 👩‍💼 - {customer}</h2>;
 }
 
 export default Customer;

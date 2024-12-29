@@ -59,10 +59,10 @@ function AccountOperations() {
 
   return (
     <div>
-      <h2>Your account operations</h2>
+      <h2>请进行账户操作</h2>
       <div className="inputs">
         <div>
-          <label>Deposit</label>
+          <label>存款</label>
           <input
             type="number"
             value={depositAmount}
@@ -72,52 +72,52 @@ function AccountOperations() {
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
           >
-            <option value="USD">US Dollar</option>
-            <option value="EUR">Euro</option>
-            <option value="GBP">British Pound</option>
-            <option value="JPY">Japanese Yen</option>
-            <option value="CNY">Chinese Yuan</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CNY">CNY</option>
           </select>
 
           <button onClick={() => handleDeposit()} disabled={isLoading}>
-            {isLoading ? "Converting..." : `Deposit ${depositAmount}`}
+            {isLoading ? "换算中..." : `存入 ${depositAmount}`}
           </button>
         </div>
 
         <div>
-          <label>Withdraw</label>
+          <label>取款</label>
           <input
             type="number"
             value={withdrawalAmount}
             onChange={(e) => setWithdrawalAmount(+e.target.value)}
           />
           <button onClick={handleWithdrawal}>
-            Withdraw {withdrawalAmount}
+            取出 {withdrawalAmount}
           </button>
         </div>
 
         <div>
-          <label>Request loan</label>
+          <label>申请贷款</label>
           <input
             type="number"
             value={loanAmount}
             onChange={(e) => setLoanAmount(+e.target.value)}
-            placeholder="Loan amount"
+            placeholder="贷款金额"
           />
           <input
             value={loanPurpose}
             onChange={(e) => setLoanPurpose(e.target.value)}
-            placeholder="Loan purpose"
+            placeholder="贷款用途"
           />
-          <button onClick={handleRequestLoan}>Request loan</button>
+          <button onClick={handleRequestLoan}>贷款申请</button>
         </div>
 
         {currentLoan > 0 && (
           <div>
             <span>
-              Pay back ${currentLoan} [{currentLoanPurpose}]
+              你的贷款金额为 ${currentLoan} [{currentLoanPurpose}]
             </span>
-            <button onClick={handlePayLoan}>Pay loan</button>
+            <button onClick={handlePayLoan}>偿还贷款</button>
           </div>
         )}
       </div>
