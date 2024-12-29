@@ -91,9 +91,7 @@ function AccountOperations() {
             value={withdrawalAmount}
             onChange={(e) => setWithdrawalAmount(+e.target.value)}
           />
-          <button onClick={handleWithdrawal}>
-            取出 {withdrawalAmount}
-          </button>
+          <button onClick={handleWithdrawal}>取出 {withdrawalAmount}</button>
         </div>
 
         <div>
