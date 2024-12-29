@@ -26,13 +26,16 @@ function AccountOperations() {
     balance,
     isLoading,
   } = useSelector((store) => store.account);
+
   console.log(balance);
 
   // 处理存款
   function handleDeposit() {
     if (!depositAmount || depositAmount <= 0 || !currency) return;
-    // const convertedAmount = depositAmount * exchangeRates[currency];
+
+    // 汇率的转换
     dispatch(deposit(depositAmount, currency)); // dispatch action
+    /* dispatch(deposit(depositAmount)); // dispatch action */
     setDepositAmount(""); // clear input
     setCurrency("USD"); // clear currency
   }
